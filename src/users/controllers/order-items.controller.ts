@@ -16,6 +16,7 @@ import { OrderItemsService } from '../services/order-items.service';
 @ApiTags('Orders')
 @Controller('orders')
 export class OrderItemsController {
+  /*
   constructor(private orderItemsService: OrderItemsService) {}
 
   @Get()
@@ -37,4 +38,5 @@ export class OrderItemsController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.orderItemsService.remove(+id);
   }
+  */
 }

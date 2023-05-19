@@ -1,12 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 import { Brand } from '../entities/brand.entity';
 import { CreateBrandDto, UpdateBrandDto } from '../dtos/brand.dtos';
 
 @Injectable()
 export class BrandsService {
+  /*
   constructor(@InjectRepository(Brand) private brandsRepo: Repository<Brand>) {}
 
   findAll() {
@@ -38,4 +37,5 @@ export class BrandsService {
   remove(id: number) {
     return this.brandsRepo.delete(id);
   }
+  */
 }

@@ -25,6 +25,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Productos')
 @Controller('products')
 export class ProductsController {
+  /*
   constructor(private productsService: ProductsService) {}
 
   @Get()
@@ -76,4 +77,5 @@ export class ProductsController {
   ) {
     return this.productsService.removeCategoryByProduct(idProduct, idCategory);
   }
+  */
 }

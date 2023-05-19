@@ -15,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Customers')
 @Controller('customers')
 export class CustomerController {
+  /*
   constructor(private customersService: CustomersService) {}
 
   @Get()
@@ -44,4 +45,5 @@ export class CustomerController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.customersService.remove(+id);
   }
+  */
 }

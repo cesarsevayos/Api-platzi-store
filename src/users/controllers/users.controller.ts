@@ -15,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
+  /*
   constructor(private usersService: UsersService) {}
 
   @Get()
@@ -49,4 +50,5 @@ export class UsersController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(+id);
   }
+  */
 }

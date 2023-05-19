@@ -2,8 +2,6 @@
 /dist
 /node_modules
 
-=======
-
 # Logs
 logs
 *.log
@@ -39,6 +37,7 @@ lerna-debug.log*
 *.env
 /postgres_data
 /mysql_data
+/mondo_data
 
 .pnpm-debug.log*
 

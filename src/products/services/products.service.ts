@@ -1,6 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Between, FindOptionsWhere, In } from 'typeorm';
 
 import { Product } from './../entities/product.entity';
 import {
@@ -13,6 +11,7 @@ import { Brand } from '../entities/brand.entity';
 
 @Injectable()
 export class ProductsService {
+  /*
   constructor(
     @InjectRepository(Product) private productRepo: Repository<Product>,
     @InjectRepository(Category) private categoryRepo: Repository<Category>,
@@ -58,7 +57,7 @@ export class ProductsService {
   }
 
   async create(data: CreateProductDto) {
-    /*
+
     HACER ESTO SE AHORRA LLAMANDO AL METODO CREATE EL CUAL CREA UNA INSTANCIA:
     const newProduct = new Product();
     newProduct.name = '';
@@ -66,7 +65,7 @@ export class ProductsService {
     newProduct.price = 3000;
     newProduct.stock = 50;
     newProduct.image = 'url';
-    */
+
     //EL CREATE SE ENCARGA DE CREAR LA INSTANCIA DEL OBJETO CON LA DATA MAS NO LO GUARDA EN DB
     const newProduct = this.productRepo.create(data);
     if (data.brandId) {
@@ -130,7 +129,7 @@ export class ProductsService {
   }
 
   //METODOS USANDO LISTA EN MEMORIA:
-  /*
+
   findAll() {
     return this.products;
   }

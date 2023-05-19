@@ -1,7 +1,5 @@
 import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 import { User } from '../entities/user.entity';
 import { Order } from '../entities/order.entity';
@@ -11,6 +9,7 @@ import { ProductsService } from './../../products/services/products.service';
 
 @Injectable()
 export class UsersService {
+  /*
   constructor(
     private productsService: ProductsService,
     private configService: ConfigService,
@@ -59,4 +58,5 @@ export class UsersService {
       products: await this.productsService.findAll(),
     };
   }
+  */
 }

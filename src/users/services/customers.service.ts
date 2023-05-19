@@ -2,11 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Customer } from '../entities/customer.entity';
 import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class CustomersService {
+  /*
   constructor(
     @InjectRepository(Customer) private customerRepo: Repository<Customer>,
   ) {}
@@ -37,4 +36,5 @@ export class CustomersService {
   remove(id: number) {
     return this.customerRepo.delete(id);
   }
+  */
 }

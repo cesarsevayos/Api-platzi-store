@@ -15,6 +15,7 @@ import { CreateBrandDto, UpdateBrandDto } from '../dtos/brand.dtos';
 @ApiTags('brands')
 @Controller('brands')
 export class BrandsController {
+  /*
   constructor(private brandsService: BrandsService) {}
 
   @Get()
@@ -44,4 +45,5 @@ export class BrandsController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.brandsService.remove(+id);
   }
+  */
 }
