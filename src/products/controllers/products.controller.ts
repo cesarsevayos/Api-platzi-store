@@ -12,35 +12,37 @@ import {
   Res,
   // ParseIntPipe,
 } from '@nestjs/common';
-
 import { Response } from 'express';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
+
 import { ParseIntPipe } from '../../common/parse-int.pipe';
+import { MongoIdPipe } from './../../common/mongo-id.pipe';
 import {
   CreateProductDto,
-  UpdateProductDto,
   FilterProductsDto,
+  UpdateProductDto,
 } from '../dtos/products.dtos';
 import { ProductsService } from './../services/products.service';
-import { ApiTags } from '@nestjs/swagger';
-@ApiTags('Productos')
+
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
-  /*
   constructor(private productsService: ProductsService) {}
 
   @Get()
-  getProducts() {
-    return this.productsService.findAll();
+  @ApiOperation({ summary: 'List of products' })
+  getProducts(@Query() params: FilterProductsDto) {
+    return this.productsService.findAll(params);
   }
 
-  @Get()
-  getProductsFilter(@Query() params: FilterProductsDto) {
-    return this.productsService.findAllFilter(params);
+  @Get('filter')
+  getProductFilter() {
+    return `yo soy un filter`;
   }
 
   @Get(':productId')
   @HttpCode(HttpStatus.ACCEPTED)
-  getOne(@Param('productId', ParseIntPipe) productId: number) {
+  getOne(@Param('productId', MongoIdPipe) productId: string) {
     return this.productsService.findOne(productId);
   }
 
@@ -49,33 +51,16 @@ export class ProductsController {
     return this.productsService.create(payload);
   }
 
-  @Put(':id')
+  @Put(':productId')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('productId', MongoIdPipe) id: string,
     @Body() payload: UpdateProductDto,
   ) {
     return this.productsService.update(id, payload);
   }
 
-  @Put(':idProduct/category/:idCategory')
-  addCategoryProduct(
-    @Param('idProduct', ParseIntPipe) idProduct: number,
-    @Param('idCategory', ParseIntPipe) idCategory: number,
-  ) {
-    return this.productsService.addCategoryToProduct(idProduct, idCategory);
-  }
-
-  @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
+  @Delete(':productId')
+  delete(@Param('productId', MongoIdPipe) id: string) {
     return this.productsService.remove(id);
   }
-
-  @Delete(':idProduct/category/:idCategory')
-  deleteCategory(
-    @Param('idProduct', ParseIntPipe) idProduct: number,
-    @Param('idCategory', ParseIntPipe) idCategory: number,
-  ) {
-    return this.productsService.removeCategoryByProduct(idProduct, idCategory);
-  }
-  */
 }

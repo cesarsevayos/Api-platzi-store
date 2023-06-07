@@ -15,7 +15,6 @@ import { CreateOrderDto, UpdateOrderDto } from '../dtos/order.dto';
 @ApiTags('Orders')
 @Controller('orders')
 export class OrdersController {
-  /*
   constructor(private ordersService: OrdersService) {}
 
   @Get()
@@ -24,26 +23,29 @@ export class OrdersController {
   }
 
   @Get(':id')
-  get(@Param('id', ParseIntPipe) id: number) {
+  get(@Param('id') id: string) {
     return this.ordersService.findOne(id);
   }
 
-  @Post()
-  create(@Body() payload: CreateOrderDto) {
-    return this.ordersService.create(payload);
-  }
+  // @Post()
+  // create(@Body() payload: CreateOrderDto) {
+  //   return this.ordersService.create(payload);
+  // }
 
-  @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateOrderDto,
-  ) {
-    return this.ordersService.update(id, payload);
-  }
+  // @Put(':id')
+  // update(@Param('id') id: string, @Body() payload: UpdateOrderDto) {
+  //   return this.ordersService.update(id, payload);
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.ordersService.remove(+id);
+  remove(@Param('id') id: string) {
+    return this.ordersService.remove(id);
   }
-  */
+
+  @Delete(':orderId/product/:productId')
+  removeProduct(
+    @Param('orderId') orderId: string,
+    @Param('productId') productId: string,
+  ) {
+    return this.ordersService.removeProduct(orderId, productId);
+  }
 }

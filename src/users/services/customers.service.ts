@@ -1,40 +1,37 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { FilterQuery, Model } from 'mongoose';
 
 import { Customer } from '../entities/customer.entity';
 import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
 
 @Injectable()
 export class CustomersService {
-  /*
   constructor(
-    @InjectRepository(Customer) private customerRepo: Repository<Customer>,
+    @InjectModel(Customer.name) private customerModel: Model<Customer>,
   ) {}
 
   findAll() {
-    return this.customerRepo.find();
+    return this.customerModel.find().exec();
   }
 
-  async findOne(id: number) {
-    const customer = await this.customerRepo.findOne({ where: { id } });
-    if (!customer) {
-      throw new NotFoundException(`Customer #${id} not found`);
-    }
-    return customer;
+  async findOne(id: string) {
+    return this.customerModel.findById(id);
   }
 
   create(data: CreateCustomerDto) {
-    const newCustomer = this.customerRepo.create(data);
-    return this.customerRepo.save(newCustomer);
+    //Crea un objeto del modelo:
+    const newCustomer = new this.customerModel(data);
+    return newCustomer.save();
   }
 
-  async update(id: number, changes: UpdateCustomerDto) {
-    const customer = await this.customerRepo.findOne({ where: { id } });
-    this.customerRepo.merge(customer, changes);
-    return this.customerRepo.save(customer);
-  }
+  // async update(id: string, changes: UpdateCustomerDto) {
+  //   const customer = await this.customerModel.findOne({ where: { id } });
+  //   this.customerModel.merge(customer, changes);
+  //   return this.customerModel.save(customer);
+  // }
 
-  remove(id: number) {
-    return this.customerRepo.delete(id);
+  remove(id: string) {
+    return this.customerModel.findByIdAndDelete(id);
   }
-  */
 }

@@ -1,41 +1,19 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
 
 import { Customer } from './customer.entity';
 import { OrderItem } from './order-item.entity';
+import { Product } from 'src/products/entities/product.entity';
 
 export class Order {
-  id: number;
-
+  @Prop({ type: Date })
   updateAt: Date;
 
-  customer: Customer;
+  @Prop({ type: Types.ObjectId, ref: Customer.name, required: true })
+  customer: Customer | Types.ObjectId;
 
-  items: OrderItem[];
-
-  @Expose()
-  get products() {
-    if (this.items) {
-      return this.items
-        .filter((item) => !!item)
-        .map((item) => ({
-          ...item.product,
-          quantity: item.quantity,
-          itemId: item.id,
-        }));
-    }
-    return [];
-  }
-
-  @Expose()
-  get total() {
-    if (this.items) {
-      return this.items
-        .filter((item) => !!item)
-        .reduce((total, item) => {
-          const totalItem = item.product.price * item.quantity;
-          return total + totalItem;
-        }, 0);
-    }
-    return [0];
-  }
+  @Prop({ type: [{ type: Types.ObjectId, ref: Product.name }] })
+  products: Types.Array<Product>;
 }
+
+export const OrderSchema = SchemaFactory.createForClass(Order);
