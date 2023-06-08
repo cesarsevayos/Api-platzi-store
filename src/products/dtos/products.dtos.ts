@@ -1,62 +1,58 @@
 import {
   IsString,
   IsNumber,
+  IsUrl,
   IsNotEmpty,
   IsPositive,
   IsOptional,
   Min,
   ValidateIf,
   ValidateNested,
+  IsMongoId,
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+
 import { CreateCategoryDto } from './category.dtos';
 
 export class CreateProductDto {
-  @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({ description: `product's name` })
   readonly name: string;
 
-  @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   readonly description: string;
 
-  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
+  @ApiProperty()
   readonly price: number;
 
-  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
+  @ApiProperty()
   readonly stock: number;
 
-  @ApiProperty()
+  @IsUrl()
   @IsNotEmpty()
+  @ApiProperty()
   readonly image: string;
 
-  @ApiProperty()
   @IsNotEmpty()
   @ValidateNested()
+  @ApiProperty()
   readonly category: CreateCategoryDto;
 
-  // @ApiProperty()
-  // @IsPositive()
-  // @IsNumber()
-  // @IsNotEmpty()
-  // readonly brandId: number;
-
-  // @ApiProperty()
-  // @IsArray()
-  // @IsNotEmpty()
-  // readonly categoriesIds: number[];
+  @IsNotEmpty()
+  @IsMongoId()
+  readonly brand: string;
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
 
-//Filtro para paginacion
 export class FilterProductsDto {
   @IsOptional()
   @IsPositive()
@@ -67,11 +63,10 @@ export class FilterProductsDto {
   offset: number;
 
   @IsOptional()
-  @IsPositive()
+  @Min(0)
   minPrice: number;
 
-  //Valida solo si existe el minPrice
-  @ValidateIf((item) => item.minPrice)
+  @ValidateIf((params) => params.minPrice)
   @IsPositive()
   maxPrice: number;
 }

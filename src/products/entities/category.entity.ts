@@ -9,3 +9,4 @@ export class Category {
   name: string;
   //products: Product[];
 }
+export const CategorySchema = SchemaFactory.createForClass(Category);

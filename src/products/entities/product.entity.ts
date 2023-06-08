@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 import { Brand } from './brand.entity';
-import { Category } from './category.entity';
 
 @Schema()
 export class Product extends Document {
@@ -21,7 +20,6 @@ export class Product extends Document {
   @Prop()
   image: string;
 
-  //Relacion embebida con category
   @Prop(
     raw({
       name: { type: String },
@@ -29,6 +27,10 @@ export class Product extends Document {
     }),
   )
   category: Record<string, any>;
+
+  @Prop({ type: Types.ObjectId, ref: Brand.name })
+  brand: Brand | Types.ObjectId;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
+ProductSchema.index({ price: 1, stock: -1 });

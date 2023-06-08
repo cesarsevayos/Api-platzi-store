@@ -1,43 +1,44 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 import { Category } from '../entities/category.entity';
 import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/category.dtos';
 
 @Injectable()
 export class CategoriesService {
-  /*
   constructor(
-    @InjectRepository(Category) private categoryRepo: Repository<Category>,
+    @InjectModel(Category.name) private categoryModel: Model<Category>,
   ) {}
 
   findAll() {
-    return this.categoryRepo.find();
+    return this.categoryModel.find().exec();
   }
 
-  findOne(id: number) {
-    const category = this.categoryRepo.findOne({
-      where: { id },
-      relations: ['products'],
-    });
-    if (!category) {
-      throw new NotFoundException(`Category #${id} not found`);
+  async findOne(id: string) {
+    const product = await this.categoryModel.findOne({ _id: id }).exec();
+    if (!product) {
+      throw new NotFoundException(`Brand #${id} not found`);
     }
-    return category;
+    return product;
   }
 
   create(data: CreateCategoryDto) {
-    const newCategory = this.categoryRepo.create(data);
-    return this.categoryRepo.save(newCategory);
+    const newBrand = new this.categoryModel(data);
+    return newBrand.save();
   }
 
-  async update(id: number, changes: UpdateCategoryDto) {
-    const category = await this.categoryRepo.findOne({ where: { id } });
-    this.categoryRepo.merge(category, changes);
-    return this.categoryRepo.save(category);
+  async update(id: string, changes: UpdateCategoryDto) {
+    const product = await this.categoryModel
+      .findByIdAndUpdate(id, { $set: changes }, { new: true })
+      .exec();
+    if (!product) {
+      throw new NotFoundException(`Brand #${id} not found`);
+    }
+    return product;
   }
 
-  remove(id: number) {
-    return this.categoryRepo.delete(id);
+  remove(id: string) {
+    return this.categoryModel.findByIdAndDelete(id);
   }
-  */
 }

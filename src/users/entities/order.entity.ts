@@ -1,13 +1,13 @@
-import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { Customer } from './customer.entity';
-import { OrderItem } from './order-item.entity';
-import { Product } from 'src/products/entities/product.entity';
+import { Product } from '../../products/entities/product.entity';
 
-export class Order {
+@Schema()
+export class Order extends Document {
   @Prop({ type: Date })
-  updateAt: Date;
+  date: Date;
 
   @Prop({ type: Types.ObjectId, ref: Customer.name, required: true })
   customer: Customer | Types.ObjectId;

@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model } from 'mongoose';
 
 import { Customer } from '../entities/customer.entity';
 import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
@@ -20,16 +20,16 @@ export class CustomersService {
   }
 
   create(data: CreateCustomerDto) {
-    //Crea un objeto del modelo:
-    const newCustomer = new this.customerModel(data);
-    return newCustomer.save();
+    console.log(data);
+    const newModel = new this.customerModel(data);
+    return newModel.save();
   }
 
-  // async update(id: string, changes: UpdateCustomerDto) {
-  //   const customer = await this.customerModel.findOne({ where: { id } });
-  //   this.customerModel.merge(customer, changes);
-  //   return this.customerModel.save(customer);
-  // }
+  update(id: string, changes: UpdateCustomerDto) {
+    return this.customerModel
+      .findByIdAndUpdate(id, { $set: changes }, { new: true })
+      .exec();
+  }
 
   remove(id: string) {
     return this.customerModel.findByIdAndDelete(id);
