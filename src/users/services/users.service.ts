@@ -5,23 +5,13 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
-import { ProductsService } from '../../products/services/products.service';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private productsService: ProductsService,
-    @Inject('MONGO') private databaseMongo: Db,
-    @InjectModel(User.name) private userModel: Model<User>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   findAll() {
     return this.userModel.find().exec();
-  }
-
-  getTasks() {
-    const tasksCollection = this.databaseMongo.collection('tasks');
-    return tasksCollection.find().toArray();
   }
 
   async findOne(id: string) {
