@@ -10,12 +10,23 @@ import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  findAll() {
-    return this.userModel.find().exec();
+  async findAll() {
+    const users = await this.userModel.find().lean().exec();
+    console.log(users);
+    return users.map((user) => ({
+      id: user._id.toString(),
+      email: user.email,
+      role: user.role,
+    }));
   }
 
   async findOne(id: string) {
-    return this.userModel.findById(id);
+    const user = await this.userModel.findById(id).lean();
+    return {
+      id: user._id.toString(),
+      email: user.email,
+      role: user.role,
+    }
   }
 
   async findByEmail(email: string) {
@@ -35,7 +46,7 @@ export class UsersService {
   async create(data: CreateUserDto) {
     const newModel = new this.userModel(data);
     const hashPassword = await bcrypt.hash(newModel.password, 10);
-    newModel.password = hashPassword; 
+    newModel.password = hashPassword;
     const model = await newModel.save();
     const { password, ...rta } = model.toJSON();
     return rta;

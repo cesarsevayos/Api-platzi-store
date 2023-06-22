@@ -28,9 +28,10 @@ export class ProductsService {
         .populate('brand')
         .skip(offset)
         .limit(limit)
+        .lean()
         .exec();
     }
-    return this.productModel.find().populate('brand').exec();
+    return this.productModel.find().populate('brand').lean().exec();
   }
 
   async findOne(id: string) {
